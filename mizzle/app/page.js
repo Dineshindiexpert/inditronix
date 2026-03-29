@@ -1,11 +1,16 @@
+import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer"
 
 export default function Home() {
   return (
-    <> this is a home page
-       <Header/>
-       <Footer/>
+    <>
+      <Header />
+      <main className="flex-grow-1 mt-5 pt-4">
+        <h1 className="text-center">Welcome
+          <h2>start here the project now</h2>
+        </h1>
+      </main>
+      <Footer />
     </>
   );
 }
