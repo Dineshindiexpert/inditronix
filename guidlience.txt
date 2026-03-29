@@ -1,0 +1,42 @@
+my-ecom-store/
+├── app/                      (Routes aur Pages yahan honge)
+│   ├── layout.js             (Global Navbar/Footer aur Providers)
+│   ├── page.js               (Homepage - '/')
+│   ├── login/
+│   │   └── page.js           ('/login')
+│   ├── register/
+│   │   └── page.js           ('/register')
+│   ├── products/
+│   │   ├── page.js           (All Products List - '/products')
+│   │   └── [id]/             (Dynamic Route)
+│   │       └── page.js       (Single Product Details - '/products/123')
+│   ├── cart/
+│   │   └── page.js           (Shopping Cart - '/cart')
+│   ├── checkout/
+│   │   └── page.js           (Checkout Page - '/checkout')
+│   ├── profile/
+│   │   ├── page.js           (User Profile - '/profile')
+│   │   └── orders/
+│   │       └── page.js       (Order History - '/profile/orders')
+│   ├── api/                  (Backend API Routes)
+│   │   ├── products/route.js (API to get products)
+│   │   └── auth/route.js     (API for login/signup)
+│   └── loading.js            (Common loading spinner for all pages)
+│
+├── components/               (Re-usable UI elements - Not Pages)
+│   ├── ui/                   (Buttons, Inputs, Modals)
+│   ├── layout/               (Navbar.js, Footer.js, Sidebar.js)
+│   └── product/              (ProductCard.js, ProductImage.js)
+│
+├── lib/                      (Utility functions/Setup)
+│   ├── mongodb.js            (Database connection)
+│   └── utils.js              (Formatting dates, currency etc.)
+│
+├── public/                   (Images, Icons, Fonts)
+│   └── logo.png
+│
+├── store/                    (State Management - Redux ya Zustand)
+│   └── useCartStore.js
+│
+└── styles/                   (Global CSS/Tailwind)
+    └── globals.css
