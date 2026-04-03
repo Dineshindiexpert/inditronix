@@ -26,6 +26,9 @@ const Header = () => {
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
+  const handleSearch = () => {
+    if (query.trim()) router.push(`/search?q=${query.trim()}`);
+  };
 
   return (
     <Navbar bg="light" expand="lg" fixed="top" className="border-bottom">
@@ -63,20 +66,12 @@ const Header = () => {
                 placeholder="Search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && query.trim()) {
-                    router.push(`/search?q=${query}`);
-                  }
-                }}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
-              <Button
-                variant="outline-secondary"
-                onClick={() => query.trim() && router.push(`/search?q=${query}`)}
-              >
+              <Button variant="outline-secondary" onClick={handleSearch}>
                 <Search />
               </Button>
             </InputGroup>
-
 
             {/* Wishlist */}
             <Link href="/Wishlist" className="position-relative text-dark">
