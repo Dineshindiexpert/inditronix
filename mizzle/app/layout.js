@@ -1,5 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from "./(protected)/components/layout/Header";
+import Footer from "./(protected)/components/layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,11 +22,13 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default function PublicLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="d-flex flex-column min-vh-100">
+        
         {children}
+        
       </body>
     </html>
   );

@@ -1,42 +1,50 @@
 my-ecom-store/
-├── app/                      (Routes aur Pages yahan honge)
-│   ├── layout.js             (Global Navbar/Footer aur Providers)
-│   ├── page.js               (Homepage - '/')
+├── app/                              (Pages & Routes)
+│   ├── layout.js                     (Global layout, Navbar/Footer, Providers)
+│   ├── loading.js                    (Common loading spinner)
+│   ├── page.js                       (Homepage - '/')
 │   ├── login/
-│   │   └── page.js           ('/login')
+│   │   └── page.js                   ('/login')
 │   ├── register/
-│   │   └── page.js           ('/register')
+│   │   └── page.js                   ('/register')
 │   ├── products/
-│   │   ├── page.js           (All Products List - '/products')
-│   │   └── [id]/             (Dynamic Route)
-│   │       └── page.js       (Single Product Details - '/products/123')
+│   │   ├── page.js                   (All Products - '/products')
+│   │   └── [id]/
+│   │       └── page.js               (Single Product - '/products/:id')
 │   ├── cart/
-│   │   └── page.js           (Shopping Cart - '/cart')
+│   │   └── page.js                   (Shopping Cart - '/cart', protected)
 │   ├── checkout/
-│   │   └── page.js           (Checkout Page - '/checkout')
+│   │   └── page.js                   (Checkout - '/checkout', protected)
 │   ├── profile/
-│   │   ├── page.js           (User Profile - '/profile')
+│   │   ├── page.js                   (User Profile - '/profile', protected)
 │   │   └── orders/
-│   │       └── page.js       (Order History - '/profile/orders')
-│   ├── api/                  (Backend API Routes)
-│   │   ├── products/route.js (API to get products)
-│   │   └── auth/route.js     (API for login/signup)
-│   └── loading.js            (Common loading spinner for all pages)
+│   │       └── page.js               (Order History - '/profile/orders', protected)
+│   └── api/                          (Backend API routes)
+│       ├── products/route.js         (Products API)
+│       └── auth/route.js             (Login/Signup API)
 │
-├── components/               (Re-usable UI elements - Not Pages)
-│   ├── ui/                   (Buttons, Inputs, Modals)
-│   ├── layout/               (Navbar.js, Footer.js, Sidebar.js)
-│   └── product/              (ProductCard.js, ProductImage.js)
+├── components/                       (Reusable UI components)
+│   ├── layout/
+│   │   ├── Navbar.js
+│   │   └── Footer.js
+│   ├── ui/
+│   │   ├── Button.js
+│   │   └── Input.js
+│   └── product/
+│       ├── ProductCard.js
+│       └── ProductImage.js
 │
-├── lib/                      (Utility functions/Setup)
-│   ├── mongodb.js            (Database connection)
-│   └── utils.js              (Formatting dates, currency etc.)
+├── lib/                              (Utilities & Helpers)
+│   ├── mongodb.js                     (DB connection)
+│   └── utils.js                       (Date/currency formatting, etc.)
 │
-├── public/                   (Images, Icons, Fonts)
+├── middleware.js                     (Protected route middleware)
+│
+├── public/                           (Static files)
 │   └── logo.png
 │
-├── store/                    (State Management - Redux ya Zustand)
+├── store/                             (State management, e.g., Zustand or Redux)
 │   └── useCartStore.js
 │
-└── styles/                   (Global CSS/Tailwind)
+└── styles/                            (Global CSS/Tailwind)
     └── globals.css
