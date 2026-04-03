@@ -2,33 +2,42 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  Container,
-  Form,
-  InputGroup,
-  Nav,
-  Navbar,
-  NavDropdown,
-  Button,
-  Badge
-} from "react-bootstrap";
+import {Container,Form,InputGroup,Nav,Navbar,NavDropdown,Button,Badge} from "react-bootstrap";
 import { Cart, Heart, Search } from "react-bootstrap-icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
+
+  // redux state
   const cartItems = useSelector((state) => state.cart.cartItems);
   const wishlistItems = useSelector((state) => state.wishlist?.wishlistItems || []);
   const [query, setQuery] = useState("");
   const router = useRouter();
-
+ // load bootstrap js
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   const handleSearch = () => {
     if (query.trim()) router.push(`/search?q=${query.trim()}`);
   };
+
+  // get user from the api by the local storage user id and token and set it to the state
+  useEffect(() => {
+    const token = localStorage.getItem('token'); 
+    const userId = localStorage.getItem('userId');
+    if (token && userId) {
+      apiService.getUserById(userId, token)
+        .then(response => {
+          setUser(response.data);
+        })
+        .catch(error => {
+          console.error("Error fetching user profile:", error);
+        });
+    }
+  }, []);
+
 
   return (
     <Navbar bg="light" expand="lg" fixed="top" className="border-bottom">
