@@ -2,10 +2,13 @@
 
 import { apiService } from "@/app/api/auth/Endpoint";
 import React, { useEffect, useState } from "react";
-
+import { useSearchParams } from 'next/navigation';
+import { Card } from "react-bootstrap";
 
 const Search = () => {
-    const [product, setproduct] = useState("");
+    const searchParams = useSearchParams();
+    const query = searchParams.get('q') || '';
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -17,15 +20,15 @@ const Search = () => {
             }
         };
 
-        fetchProducts();
-    }, []);
+        if (query) fetchProducts();
+    }, [query]);
 
-    return (<>
+    return (
         <Card>
             <Card.Body>
-                <Card.Title>Search</Card.Title>
+                <Card.Title>Search Results</Card.Title>
                 <Card.Text>
-                     {products.length > 0 ? (
+                    {products.length > 0 ? (
                         <ul>
                             {products.map((item) => (
                                 <li key={item.id}>{item.name}</li>
@@ -37,8 +40,7 @@ const Search = () => {
                 </Card.Text>
             </Card.Body>
         </Card>
-    </>)
+    )
 };
-
 
 export default Search;

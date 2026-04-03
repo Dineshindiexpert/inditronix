@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Container,
@@ -15,10 +15,13 @@ import {
 import { Cart, Heart, Search } from "react-bootstrap-icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const wishlistItems = useSelector((state) => state.wishlist?.wishlistItems || []);
+  const [query, setQuery] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
@@ -56,11 +59,24 @@ const Header = () => {
 
             {/* Search */}
             <InputGroup style={{ maxWidth: "220px" }}>
-              <Form.Control placeholder="Search" />
-              <Button variant="outline-secondary">
+              <Form.Control
+                placeholder="Search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && query.trim()) {
+                    router.push(`/search?q=${query}`);
+                  }
+                }}
+              />
+              <Button
+                variant="outline-secondary"
+                onClick={() => query.trim() && router.push(`/search?q=${query}`)}
+              >
                 <Search />
               </Button>
             </InputGroup>
+
 
             {/* Wishlist */}
             <Link href="/Wishlist" className="position-relative text-dark">
