@@ -12,6 +12,7 @@ import { apiService } from "@/app/api/auth/Endpoint";
 import Loading from "../loading";
 import { addToCart } from "@/app/store/slice/CartSlice";
 import { addToWishlist } from "@/app/store/slice/WishlistSlice";
+import Category from "../components/Category";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
@@ -59,7 +60,9 @@ const SearchPage = () => {
   return (
     <>
       <div className="container py-4">
-        <h2 className="mb-4">Search Results for "{query}"</h2>
+         <p className="fs-1 fw-bold">Your top searches here {query}</p>
+
+         <Category/>
 
         {products.length > 0 ? (
           <div className="row g-4">

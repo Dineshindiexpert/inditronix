@@ -115,7 +115,9 @@ const Header = () => {
                   />
                 }
               >
-                <NavDropdown.Item>Account</NavDropdown.Item>
+                <NavDropdown.Item >
+                  <Link href="/profile" className="nav-link">My Account</Link>
+                </NavDropdown.Item>
                 <NavDropdown.Item>Orders</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
