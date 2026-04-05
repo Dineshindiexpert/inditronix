@@ -40,7 +40,14 @@ const ContactUs = () => {
   return (
     <Container className="py-5">
 
-      <Row className="justify-content-center">
+      <Row className="justify-content-betweeen align-items-center">
+        <Col md={4} lg={6} className="mb-4 mb-md-0">
+          <h1 className="display-4 fw-bold">Get in Touch</h1>
+          <p className="lead text-muted">
+            Have questions or want to collaborate? Send us a message!
+          </p>
+        </Col>
+
         <Col md={8} lg={6}>
 
           <Card className="shadow-lg border-0 rounded-4 p-4">
