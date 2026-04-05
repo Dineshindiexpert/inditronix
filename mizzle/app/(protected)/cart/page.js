@@ -62,7 +62,7 @@ const Cart = () => {
           <CartIcon className="me-2" />
           Shopping Cart
         </h2>
-        <Button   href="/product" variant="primary" ClassName="mb-4 link">
+        <Button   href="/product" variant="primary" className="mb-4 link">
           <ArrowLeft /> Continue Shopping
         </Button>
       </div>
