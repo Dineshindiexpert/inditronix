@@ -48,3 +48,6 @@ my-ecom-store/
 │
 └── styles/                            (Global CSS/Tailwind)
     └── globals.css
+
+
+|__middleware.js

@@ -2,25 +2,11 @@
 
 import { apiService } from "@/app/api/auth/Endpoint";
 import { useEffect, useState } from "react";
-import {
-  Badge,
-  Button,
-  Card,
-  Col,
-  Container,
-  Row,
-  Spinner
-} from "react-bootstrap";
-import {
-  ArrowLeft,
-  CartPlus,
-  Check,
-  LightningFill,
-  StarFill
-} from "react-bootstrap-icons";
+import {Badge,Button,Card,Col,Container,Row,Spinner} from "react-bootstrap";
+import {ArrowLeft,CartPlus,Check,LightningFill,StarFill} from "react-bootstrap-icons";
 import { motion } from "framer-motion";
 import { useParams, useRouter } from "next/navigation";
-import Loading from "../../loading";
+import Loading from "../../components/loading";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/app/store/slice/CartSlice";
 
@@ -39,7 +25,7 @@ export default function ProductDetails({ params }) {
   const handleAddToCart = (product) => {
     const exists = cartItems.find((item) => item.id === product.id);
     if (exists) {
-      alert("Already in cart");
+     toast.error("Product already in cart");
       return;
     }
     dispatch(addToCart(product));
@@ -59,9 +45,7 @@ export default function ProductDetails({ params }) {
           );
 
           const filtered =
-            catRes?.data?.products
-              ?.filter((item) => item.id !== res.data.id)
-              ?.slice(0, 4) || [];
+            catRes?.data?.products?.filter((item) => item.id !== res.data.id)?.slice(0, 4) || [];
 
           setRelated(filtered);
         }
@@ -92,7 +76,7 @@ export default function ProductDetails({ params }) {
         className="bg-light p-4 rounded-4"
       >
 
-        {/* 🔙 Back Button */}
+        {/* Back Button */}
         <Button
           variant="link"
           className="text-dark text-decoration-none mb-4 p-0 d-flex align-items-center"
@@ -101,7 +85,7 @@ export default function ProductDetails({ params }) {
           <ArrowLeft className="me-2" /> Back to Shop
         </Button>
 
-        {/* 🛍 PRODUCT DETAILS */}
+        {/* PRODUCT DETAILS */}
         <Row className="bg-white rounded-4 shadow-sm overflow-hidden g-0 mb-5">
 
           {/* IMAGE */}
@@ -165,7 +149,7 @@ export default function ProductDetails({ params }) {
         </Col>
       </Row>
 
-      {/* 🔗 RELATED PRODUCTS */}
+      {/* RELATED PRODUCTS */}
       <h3 className="fw-bold mb-4">Related Products</h3>
 
       {loadingRelated ? (

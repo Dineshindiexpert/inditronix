@@ -52,3 +52,5 @@ const Pagination = () => {
 };
 
 export default Pagination;
+
+// imporve this component by adding dynamic images and captions from props or API, and also add indicators and controls for better navigation.

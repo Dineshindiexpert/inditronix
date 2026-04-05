@@ -8,16 +8,17 @@ import { useState, useEffect } from "react";
 
 const Category = ({ activeCategory }) => {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const fetchcategory = async () => {
       try {
-        setLoading(true);
         const res = await apiService.getCategories();
-        // Defensive check to ensure we are setting an array
-        setCategories(Array.isArray(res?.data?.categories) ? res.data.categories : []);
+
+        console.log("CATEGORIES API:", res.data); 
+
+        setCategories(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Failed to fetch categories:", err);
       } finally {
@@ -28,6 +29,15 @@ const Category = ({ activeCategory }) => {
     fetchcategory();
   }, []);
 
+  //  format label function
+  const formatName = (name) => {
+    if (!name) return "";
+    return name
+      .toString()
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+  };
+
   return (
     <div className="d-flex gap-3 p-3 align-items-center mt-1">
 
@@ -35,34 +45,55 @@ const Category = ({ activeCategory }) => {
       <Rightsideslider />
 
       {/* Categories */}
-      <div className="d-flex gap-2 overflow-auto flex-nowrap" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="d-flex gap-2 overflow-auto flex-nowrap p-4">
 
-        {/* All */}
+        {/* All Button */}
         <Button
           variant={!activeCategory ? "dark" : "outline-secondary"}
           onClick={() => router.push("/product")}
-          className="rounded-pill px-3 py-1 text-nowrap" // Added text-nowrap
+          className="rounded-pill px-3 py-1 text-nowrap"
         >
           All
         </Button>
 
-        {/* Map API data */}
-        {!loading && categories.map((item, index) => {
-          // Assuming item is a string based on your original code. 
-          // If item is an object (e.g., {id, name}), change to item.name
-          const isActive = activeCategory === item;
+        {/* Loading */}
+        {loading && (
+          <span className="text-muted px-2">Loading...</span>
+        )}
 
-          return (
-            <Button
-              key={index}
-              variant={isActive ? "dark" : "outline-secondary"}
-              onClick={() => router.push(`/category/${item}`)}
-              className="rounded-pill px-3 py-1 text-nowrap" // Added text-nowrap
-            >
-              {item}
-            </Button>
-          );
-        })}
+        {/* Categories List */}
+        {!loading && categories.length > 0 &&
+          categories.map((item) => {
+            
+            const value =
+              typeof item === "string" ? item : item?.slug;
+
+            const label =
+              typeof item === "string" ? item : item?.name;
+
+            const isActive =
+              activeCategory?.toLowerCase() ===
+              value?.toLowerCase();
+
+            return (
+              <Button
+                key={value}
+                variant={isActive ? "dark" : "outline-secondary"}
+                onClick={() => router.push(`/category/${value}`)}
+                className="rounded-pill px-3 py-1 text-nowrap"
+              >
+                {formatName(label)}
+              </Button>
+            );
+          })
+        }
+
+        {/* No Data */}
+        {!loading && categories.length === 0 && (
+          <span className="text-muted px-2">
+            No categories found
+          </span>
+        )}
 
       </div>
     </div>

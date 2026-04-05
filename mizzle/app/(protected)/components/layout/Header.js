@@ -2,42 +2,72 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {Container,Form,InputGroup,Nav,Navbar,NavDropdown,Button,Badge} from "react-bootstrap";
+import {Container, Form, InputGroup, Nav, Navbar,NavDropdown, Button, Badge} from "react-bootstrap";
 import { Cart, Heart, Search } from "react-bootstrap-icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/navigation';
+import { apiService } from "@/app/api/auth/Endpoint";
 
 const Header = () => {
 
   // redux state
   const cartItems = useSelector((state) => state.cart.cartItems);
   const wishlistItems = useSelector((state) => state.wishlist?.wishlistItems || []);
+
+  // local state
   const [query, setQuery] = useState("");
+  const [user, setUser] = useState(null);
+
   const router = useRouter();
- // load bootstrap js
+
+  // load bootstrap js
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
+
+  // search handler
   const handleSearch = () => {
-    if (query.trim()) router.push(`/search?q=${query.trim()}`);
+    if (query.trim()) {
+      router.push(`/search?q=${query.trim()}`);
+    }
   };
 
-  // get user from the api by the local storage user id and token and set it to the state
+
   useEffect(() => {
-    const token = localStorage.getItem('token'); 
+
+    //  load from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+
+    //  Fetch fresh user from API
     const userId = localStorage.getItem('userId');
-    if (token && userId) {
-      apiService.getUserById(userId, token)
-        .then(response => {
-          setUser(response.data);
+
+    if (userId) {
+      apiService.getUserById(userId)
+        .then(res => {
+          setUser(res.data);
+
+          // update localStorage with fresh data
+          localStorage.setItem("user", JSON.stringify(res.data));
         })
-        .catch(error => {
-          console.error("Error fetching user profile:", error);
+        .catch(err => {
+          console.error("Error fetching user:", err);
         });
     }
-  }, []);
 
+  }, []);
+  const handleorders = () => {
+    router.push("/orders")
+  }
+
+  // logout
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push("/login");
+  };
 
   return (
     <Navbar bg="light" expand="lg" fixed="top" className="border-bottom">
@@ -45,8 +75,14 @@ const Header = () => {
 
         {/* Logo */}
         <Link href="/product" className="d-flex align-items-center text-decoration-none">
-          <Image src="/logo.PNG" width={35} height={35} alt="logo" className="rounded-circle me-2" />
-          <span className="fw-bold text-dark">MIzzle</span>
+          <Image
+            src="/logo.PNG"
+            width={35}
+            height={35}
+            alt="logo"
+            className="rounded-circle me-2"
+          />
+          <span className="fw-bold text-dark">Mizzle</span>
         </Link>
 
         {/* Toggle */}
@@ -58,6 +94,7 @@ const Header = () => {
           <Nav className="mx-auto text-center">
             <Link href="/product" className="nav-link">Home</Link>
             <Link href="/product" className="nav-link">Products</Link>
+            <Link href="/contact" className="nav-link">Contact</Link>
 
             <NavDropdown title="Explore">
               <NavDropdown.Item>Features</NavDropdown.Item>
@@ -85,7 +122,7 @@ const Header = () => {
             {/* Wishlist */}
             <Link href="/Wishlist" className="position-relative text-dark">
               <Heart size={20} />
-              {wishlistItems.length > 0 && (
+              {wishlistItems?.length > 0 && (
                 <Badge
                   bg="danger"
                   pill
@@ -99,7 +136,7 @@ const Header = () => {
             {/* Cart */}
             <Link href="/cart" className="position-relative text-dark">
               <Cart size={22} />
-              {cartItems.length > 0 && (
+              {cartItems?.length > 0 && (
                 <Badge
                   bg="danger"
                   pill
@@ -110,31 +147,38 @@ const Header = () => {
               )}
             </Link>
 
-            {/* Profile */}
-            <Nav>
+            <Nav className="ms-auto">
               <NavDropdown
                 align="end"
                 title={
                   <Image
-                    src="/logo.PNG"
-                    width={32}
-                    height={32}
+                    src={user?.avatar || "/logo.PNG"}
+                    width={50}
+                    height={50}
                     alt="profile"
                     className="rounded-circle"
                   />
                 }
+                id="dropdown-profile"
+                bsPrefix=" "
               >
-                <NavDropdown.Item >
-                  <Link href="/profile" className="nav-link">My Account</Link>
+                {/* My Account Link */}
+                <NavDropdown.Item as={Link} href="/profile" passHref>
+                  My Account
                 </NavDropdown.Item>
-                <NavDropdown.Item>Orders</NavDropdown.Item>
+
+                {/* Username display */}
+                <NavDropdown.ItemText>
+                  {user?.username || "User"}
+                </NavDropdown.ItemText>
+
+                <NavDropdown.Item onClick={handleorders}>
+                  orders
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item
-                  onClick={() => {
-                    localStorage.removeItem('token');
-                    window.location.href = '/login';
-                  }}
-                >
+
+                {/* Logout */}
+                <NavDropdown.Item onClick={handleLogout}>
                   Logout
                 </NavDropdown.Item>
               </NavDropdown>

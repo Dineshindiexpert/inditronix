@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
 import { apiService } from "@/app/api/auth/Endpoint";
-import Loading from "../loading";
+import Loading from "../components/loading";
 import { addToCart } from "@/app/store/slice/CartSlice";
 import { addToWishlist } from "@/app/store/slice/WishlistSlice";
 import Category from "../components/Category";

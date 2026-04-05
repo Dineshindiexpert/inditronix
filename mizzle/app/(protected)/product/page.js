@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
 import { apiService } from "@/app/api/auth/Endpoint";
-import Loading from "../loading";
+import Loading from "../components/loading";
 import Category from "../components/Category";
 import Pagination from "../components/Pagination";
 import { addToCart } from "@/app/store/slice/CartSlice";

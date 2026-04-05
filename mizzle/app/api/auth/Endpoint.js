@@ -47,8 +47,12 @@ export const apiService = {
 
   // for the user management (CRUD) operations
 
-  // get all users
+  // get all users 
   getUsers: () => authentication.get('/users'),
+
+  // get user by id
+
+  getUserById: (id) => authentication.get(`/users/${id}`),
 
   // post a new user 
   registerUser: (data) => authentication.post('/users', data),

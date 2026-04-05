@@ -45,11 +45,11 @@ const Signup = () => {
           password: formData.password
         });
 
-        alert("Signup successful ✅");
+        
         router.push("/login");
 
       } catch (err) {
-        setError("Signup failed ❌");
+        setError("Signup failed !");
       }
     }
 

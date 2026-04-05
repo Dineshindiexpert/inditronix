@@ -17,7 +17,6 @@ const Login = () => {
 
   const [error, setError] = useState("");
 
-  // handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -25,7 +24,6 @@ const Login = () => {
     });
   };
 
-  // handle submit
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -34,10 +32,8 @@ const Login = () => {
       event.stopPropagation();
     } else {
       try {
-        // ✅ get all users from mock API
         const res = await apiService.getUsers();
 
-        // ✅ find matching user
         const user = res.data.find(
           (u) =>
             u.username === formData.username &&
@@ -45,20 +41,18 @@ const Login = () => {
         );
 
         if (user) {
-          // ✅ store login info in localStorage (UI only)
+          // STORE DATA
           localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("userId", user.id);
+          localStorage.setItem("token", "logged_in_user");
           localStorage.setItem("isLoggedIn", "true");
 
-           
           document.cookie = "token=logged_in_user; path=/";
 
-          console.log("Login successful:", user);
-
-          router.push("/product"); // ya jo tera main page hai
+          router.push("/product");
         } else {
           setError("Invalid username or password");
         }
-
       } catch (err) {
         console.error(err);
         setError("Login failed");
@@ -67,6 +61,7 @@ const Login = () => {
 
     setValidated(true);
   };
+
 
   return (
     <div
@@ -151,7 +146,7 @@ const Login = () => {
                   {/* Signup Link */}
                   <div className="text-center mt-3">
                     <Link
-                      href="/register"
+                      href="/signup"
                       className="text-white text-decoration-none fw-semibold"
                     >
                       New user? Sign up
