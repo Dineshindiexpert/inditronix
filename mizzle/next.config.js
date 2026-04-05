@@ -6,6 +6,7 @@ const nextConfig = {
   images: {
     domains: ["cdn.jsdelivr.net"],
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
