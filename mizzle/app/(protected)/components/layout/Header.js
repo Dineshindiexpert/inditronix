@@ -66,6 +66,7 @@ const Header = () => {
   // logout
   const handleLogout = () => {
     localStorage.clear();
+    document.cookie = "token=; path=/; max-age=10"; // Clear cookie for 10 seconds
     router.push("/login");
   };
 

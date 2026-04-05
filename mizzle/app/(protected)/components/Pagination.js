@@ -15,8 +15,8 @@ const Pagination = () => {
             style={{ height: "400px", objectFit: "cover" }}
           />
           <Carousel.Caption>
-            <h3>First slide</h3>
-            <p>Discover amazing products</p>
+            <h3>Discover Amazing Products</h3>
+            <p>Find the best items curated just for you</p>
           </Carousel.Caption>
         </Carousel.Item>
 
@@ -28,8 +28,8 @@ const Pagination = () => {
             style={{ height: "400px", objectFit: "cover" }}
           />
           <Carousel.Caption>
-            <h3>Second slide</h3>
-            <p>Best deals just for you</p>
+            <h3>Exclusive Deals</h3>
+            <p>Exclusive Deals</p>
           </Carousel.Caption>
         </Carousel.Item>
 
@@ -41,8 +41,8 @@ const Pagination = () => {
             style={{ height: "400px", objectFit: "cover" }}
           />
           <Carousel.Caption>
-            <h3>Third slide</h3>
-            <p>Shop now and save big</p>
+            <h3>Shop & Save Big</h3>
+            <p>Limited time offers available now</p>
           </Carousel.Caption>
         </Carousel.Item>
 

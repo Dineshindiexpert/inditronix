@@ -62,7 +62,7 @@ const Cart = () => {
           <CartIcon className="me-2" />
           Shopping Cart
         </h2>
-        <Button as={Link} href="/product" variant="primary" ClassName="mb-4">
+        <Button   href="/product" variant="primary" ClassName="mb-4 link">
           <ArrowLeft /> Continue Shopping
         </Button>
       </div>
@@ -72,7 +72,7 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <div className="text-center">
           <p className="lead">Your cart is empty.</p>
-          <Button as={Link} href="/product" variant="primary">
+          <Button  href="/product" variant="primary">
             <ArrowLeft /> Continue Shopping
           </Button>
         </div>

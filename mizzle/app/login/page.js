@@ -1,13 +1,30 @@
 'use client';
 
 import { Col, Container, Row, Card, Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { apiService } from "../api/auth/Endpoint";
 
 const Login = () => {
   const router = useRouter();
+  useEffect(() => {
+    const checkUser = () => {
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn === "true") {
+        router.push("/product"); // Redirect if already logged in
+      }
+    };
+
+    checkUser(); 
+
+    // Optional: Agar localStorage change hota rahe toh continuously check karna
+    window.addEventListener("storage", checkUser);
+
+    return () => window.removeEventListener("storage", checkUser);
+  }, [router]);
+
+
 
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
@@ -47,7 +64,7 @@ const Login = () => {
           localStorage.setItem("token", "logged_in_user");
           localStorage.setItem("isLoggedIn", "true");
 
-          document.cookie = "token=logged_in_user; path=/";
+          document.cookie = "token=logged_in_user; path=/product; max-age=10"; // cookie set for 10 seconds
 
           router.push("/product");
         } else {
