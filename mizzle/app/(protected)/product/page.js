@@ -2,14 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
-import {
-  Check,
-  Heart,
-  HeartFill,
-  LightningFill,
-  StarFill,
-  Tag
-} from "react-bootstrap-icons";
+import {Check,Heart,HeartFill,LightningFill,StarFill,Tag} from "react-bootstrap-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";

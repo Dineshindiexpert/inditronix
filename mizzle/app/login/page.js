@@ -18,7 +18,7 @@ const Login = () => {
 
     checkUser(); 
 
-    // Optional: Agar localStorage change hota rahe toh continuously check karna
+    // if the local strorage will be continously cange check every time but to it effect the performence of the project
     window.addEventListener("storage", checkUser);
 
     return () => window.removeEventListener("storage", checkUser);
