@@ -1,57 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import {Container,Row,Col,Card,Button,ProgressBar,Spinner,Alert,} from "react-bootstrap";
+import React from "react";
+import {Container,Row,Col,Card,Button,ProgressBar,} from "react-bootstrap";
 import { CheckCircleFill, Truck } from "react-bootstrap-icons";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const Order = () => {
   const router = useRouter();
 
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = true;
-  const [error, setError] = useState("");
+  //  Redux se cart data
+  const { cartItems } = useSelector((state) => state.cart);
 
-  //  Fetch Orders
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await fetch("/api/orders");
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch orders");
-        }
-
-        const data = await res.json();
-        setOrders(data);
-      } catch (err) {
-        setError(err.message || "Something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrders();
-  }, []);
-
-  //  Loading State
-  if (loading) {
-    return (
-      <div className="text-center mt-5">
-        <Spinner animation="border" />
-        <p>Loading your orders...</p>
-      </div>
-    );
-  }
-
-  //  Error State
-  if (error) {
-    return (
-      <Container className="mt-5">
-        <Alert variant="danger">{error}</Alert>
-      </Container>
-    );
-  }
+  //  Cart ko order me convert kiya
+  const orders = cartItems.length
+    ? [
+        {
+          id: "ORD123",
+          date: new Date().toLocaleDateString(),
+          shipping: 50,
+          tax: 20,
+          address: {
+            name: "Demo User",
+            street: "Panipat Street",
+            city: "Panipat",
+          },
+          items: cartItems,
+        },
+      ]
+    : [];
 
   return (
     <Container className="my-5">
@@ -77,17 +54,15 @@ const Order = () => {
               {/* HEADER */}
               <Row className="mb-3 align-items-center">
                 <Col>
-                  <h5 className="fw-bold">
-                    Order #{order.id}
-                  </h5>
+                  <h5 className="fw-bold">Order #{order.id}</h5>
                 </Col>
 
                 <Col className="text-end">
                   <Button
                     variant="success"
-                    onClick={() => router.push("/orders")}
+                    onClick={() => router.push("/product")}
                   >
-                    Proceed
+                    Continue Shopping
                   </Button>
                 </Col>
               </Row>
@@ -137,10 +112,13 @@ const Order = () => {
                 <Row key={item.id} className="align-items-center mb-3">
                   <Col md={2}>
                     <img
-                      src={item.image}
+                      src={item.thumbnail}     
                       alt={item.title}
                       className="img-fluid"
-                      style={{ maxHeight: "80px", objectFit: "contain" }}
+                      style={{
+                        maxHeight: "80px",
+                        objectFit: "contain",
+                      }}
                     />
                   </Col>
 
@@ -166,17 +144,23 @@ const Order = () => {
 
                     <Row>
                       <Col>Subtotal</Col>
-                      <Col className="text-end">₹{subtotal.toFixed(2)}</Col>
+                      <Col className="text-end">
+                        ₹{subtotal.toFixed(2)}
+                      </Col>
                     </Row>
 
                     <Row>
                       <Col>Shipping</Col>
-                      <Col className="text-end">₹{order.shipping}</Col>
+                      <Col className="text-end">
+                        ₹{order.shipping}
+                      </Col>
                     </Row>
 
                     <Row>
                       <Col>Tax</Col>
-                      <Col className="text-end">₹{order.tax}</Col>
+                      <Col className="text-end">
+                        ₹{order.tax}
+                      </Col>
                     </Row>
 
                     <hr />
@@ -198,8 +182,4 @@ const Order = () => {
   );
 };
 
-export default Orders;
-
-
-
-// want to debug this and the make the dynamic this 
+export default Order;

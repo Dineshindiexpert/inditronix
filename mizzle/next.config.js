@@ -3,10 +3,15 @@ const nextConfig = {
   turbopack: {
     root: __dirname,
   },
-  images: {
-    domains: ["cdn.jsdelivr.net"],
-  },
-  output: "standalone",
+ images: {
+  remotePatterns: [
+    {
+      protocol: "https",
+      hostname: "**",
+    },
+  ],
+},
+output: "standalone",
 };
 
 module.exports = nextConfig;

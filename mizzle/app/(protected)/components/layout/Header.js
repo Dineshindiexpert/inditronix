@@ -149,20 +149,20 @@ const Header = () => {
             </Link>
 
             <Nav className="ms-auto">
-              <pre>{JSON.stringify(user.avatar)</pre>
+             
               <NavDropdown
                 align="end"
-                title={
-                //   <Image
-                //    src={user?.avatar || "/logo.PNG"}
-                //     width={50}
-                //     height={50}
-                //     alt="profile"
-                //     className="rounded-circle"
-                //   />
-                // }
-                // 
-                adjfl
+                 title={
+                   <Image
+                  src={user?.avatar || "/logo.PNG"}
+                     width={50}
+                   height={50}
+                   alt="profile"
+                    className="rounded-circle"
+                  />
+               }
+                
+                
               >
                 {/* My Account Link */}
                 <NavDropdown.Item as={Link} href="/profile" passHref>
@@ -174,7 +174,7 @@ const Header = () => {
                   {user?.username || "User"}
                 </NavDropdown.ItemText>
 
-                <NavDropdown.Item onClick={handleorders}>
+                <NavDropdown.Item onClick={handleorders} as={Link} href="/orders" passHref>
                   orders
                 </NavDropdown.Item>
                 <NavDropdown.Divider />

@@ -219,12 +219,12 @@ const Cart = () => {
                   </Col>
                 </Row>
 
-                <Button  href="/checkout"
+                <Button  href="/checkout" as={Link}
                   className="w-100 mt-3 text-white"
                   style={{ backgroundColor: "#F67D31" }}
                 >
                   Proceed to Checkout
-               
+               </Button>
               
 
                 <hr />
