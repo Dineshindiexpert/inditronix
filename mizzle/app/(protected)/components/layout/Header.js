@@ -149,19 +149,20 @@ const Header = () => {
             </Link>
 
             <Nav className="ms-auto">
+              <pre>{JSON.stringify(user.avatar)</pre>
               <NavDropdown
                 align="end"
                 title={
-                  <Image
-                    src={user?.avatar || "/logo.PNG"}
-                    width={50}
-                    height={50}
-                    alt="profile"
-                    className="rounded-circle"
-                  />
-                }
-                id="dropdown-profile"
-                bsPrefix=" "
+                //   <Image
+                //    src={user?.avatar || "/logo.PNG"}
+                //     width={50}
+                //     height={50}
+                //     alt="profile"
+                //     className="rounded-circle"
+                //   />
+                // }
+                // 
+                adjfl
               >
                 {/* My Account Link */}
                 <NavDropdown.Item as={Link} href="/profile" passHref>
