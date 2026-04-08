@@ -36,7 +36,7 @@ export const apiService = {
   // get product by the search query
   searchProducts: (query) => API.get(`/products/search?q=${query}`),
 
-
+   
 
 
 
