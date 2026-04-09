@@ -41,8 +41,7 @@ const Category = ({ activeCategory }) => {
   return (
     <div className="d-flex gap-3 p-3 align-items-center mt-1">
 
-      {/* Sidebar */}
-      <Rightsideslider />
+     
 
       {/* Categories */}
       <div className="d-flex gap-2 overflow-auto flex-nowrap p-4">

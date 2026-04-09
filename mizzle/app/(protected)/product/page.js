@@ -164,7 +164,7 @@ const Homeproduct = () => {
                           )}
 
                           <Link href={productLink} className="d-grid text-decoration-none">
-                            <Button variant="warning" size="lg" href="/checkout">
+                            <Button variant="warning" size="lg">
                               <LightningFill className="me-1" />
                               Buy Now
                             </Button>

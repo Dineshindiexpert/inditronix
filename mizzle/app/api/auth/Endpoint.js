@@ -36,7 +36,7 @@ export const apiService = {
   // get product by the search query
   searchProducts: (query) => API.get(`/products/search?q=${query}`),
 
-   
+
 
 
 
@@ -62,7 +62,12 @@ export const apiService = {
 
 
   // update user by id
-  updateUser: (id, data) => authentication.put(`/users/${id}`, data)
+  updateUser: (id, data) => authentication.put(`/users/${id}`, data),
+
+  // send ordered products to the server (mock)
+  placeOrder: (orderData) => authentication.post("/authentication", orderData),
+  // get orders for a specific user
+  getOrdersByUser: (userId) => authentication.get(`/authentication?userId=${userId}`),
 };
 
 

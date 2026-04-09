@@ -1,176 +1,111 @@
 "use client";
 
-import React from "react";
-import {Container,Row,Col,Card,Button,ProgressBar,} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card, Button, ProgressBar, Spinner } from "react-bootstrap";
 import { CheckCircleFill, Truck } from "react-bootstrap-icons";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { apiService } from "@/app/api/auth/Endpoint";
 
-const Order = () => {
+const Orders = () => {
   const router = useRouter();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  //  Redux se cart data
-  const { cartItems } = useSelector((state) => state.cart);
+  useEffect(() => { fetchOrders(); }, []);
 
-  //  Cart ko order me convert kiya
-  const orders = cartItems.length
-    ? [
-        {
-          id: "ORD123",
-          date: new Date().toLocaleDateString(),
-          shipping: 50,
-          tax: 20,
-          address: {
-            name: "Demo User",
-            street: "Panipat Street",
-            city: "Panipat",
-          },
-          items: cartItems,
-        },
-      ]
-    : [];
+  const fetchOrders = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) { setLoading(false); return; }
+      // console.log("Fetching orders for user ID:", user.id);
+
+      const res = await apiService.getOrdersByUser(user.id);
+      setOrders(res.data.reverse());
+      console.log("Fetched orders:", res.data);
+
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatCurrency = (amount = 0) =>
+    new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(amount);
 
   return (
     <Container className="my-5">
+      {/* <pre>{JSON.stringify(orders, null, 2)}</pre> */}
       <Row className="mb-4">
         <Col>
           <h3 className="fw-bold">Your Orders</h3>
         </Col>
+        <Col className="text-end">
+          <Button variant="success" onClick={() => router.push("/product")}>Continue Shopping</Button>
+        </Col>
       </Row>
 
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="text-center"><Spinner animation="border" /></div>
+      ) : orders.length === 0 ? (
         <p className="text-center">No orders found.</p>
       ) : (
         orders.map((order) => {
-          const subtotal = order.items.reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0
-          );
-
-          const total = subtotal + order.shipping + order.tax;
-
+          const subtotal = order.items?.reduce((acc, item) => acc + (item.price || 0) * (item.quantity || 1), 0) || 0;
           return (
             <Card key={order.id} className="p-4 shadow-sm mb-4">
-              {/* HEADER */}
               <Row className="mb-3 align-items-center">
-                <Col>
-                  <h5 className="fw-bold">Order #{order.id}</h5>
-                </Col>
+                <Col><h5 className="fw-bold">Order #{order.id || "N/A"}</h5></Col>
 
-                <Col className="text-end">
-                  <Button
-                    variant="success"
-                    onClick={() => router.push("/product")}
-                  >
-                    Continue Shopping
-                  </Button>
-                </Col>
               </Row>
 
-              {/* STATUS */}
-              <Row className="mb-3">
-                <Col>
-                  <Truck className="me-2" />
-                  Tracking info will be shared via email.
-                </Col>
-              </Row>
+              <Row className="mb-3"><Col><Truck className="me-2" />Tracking info will be shared via email.</Col></Row>
 
-              {/* INFO */}
               <Row>
                 <Col md={4}>
                   <p><strong>Order Date:</strong></p>
-                  <p>{order.date}</p>
+                  <p>{order.date ? new Date(order.date).toLocaleDateString() : "N/A"}</p>
                   <p className="text-success">Arriving soon</p>
                 </Col>
 
                 <Col md={4}>
                   <p className="fw-bold">Shipping Address</p>
-                  <p>{order.address.name}</p>
-                  <p>{order.address.street}</p>
-                  <p>{order.address.city}</p>
+                  <p>{order.address?.name}</p>
+                  <p>{order.address?.address}</p>
+                  <p>{order.address?.city}</p>
+                  <p>{order.address?.pincode}</p>
                 </Col>
 
                 <Col md={4} className="text-center">
                   <CheckCircleFill color="green" size={24} />
-                  <p>Order placed</p>
-
+                  <p className="mt-2 text-capitalize">{order.status || "placed"}</p>
                   <ProgressBar now={25} className="mb-2" />
-
                   <div className="d-flex justify-content-between small">
-                    <span>Placed</span>
-                    <span>Processing</span>
-                    <span>Shipped</span>
-                    <span>Delivered</span>
+                    <span>Placed</span><span>Processing</span><span>Shipped</span><span>Delivered</span>
                   </div>
                 </Col>
               </Row>
 
               <hr />
-
-              {/* ITEMS */}
-              {order.items.map((item) => (
+              {order.items?.map((item) => (
                 <Row key={item.id} className="align-items-center mb-3">
-                  <Col md={2}>
-                    <img
-                      src={item.thumbnail}     
-                      alt={item.title}
-                      className="img-fluid"
-                      style={{
-                        maxHeight: "80px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Col>
-
-                  <Col md={6}>
-                    <p className="fw-bold">{item.title}</p>
-                  </Col>
-
+                  <Col md={2}><img src={item.thumbnail} alt={item.title} className="img-fluid" style={{ maxHeight: "80px", objectFit: "contain" }} /></Col>
+                  <Col md={6}><p className="fw-bold">{item.title}</p></Col>
                   <Col md={2}>Qty: {item.quantity}</Col>
-
-                  <Col md={2} className="text-end fw-bold">
-                    ₹{(item.price * item.quantity).toFixed(2)}
-                  </Col>
+                  <Col md={2} className="text-end fw-bold">{formatCurrency((item.price || 0) * (item.quantity || 1))}</Col>
                 </Row>
               ))}
 
               <hr />
-
-              {/* SUMMARY */}
               <Row>
                 <Col md={4}>
                   <Card className="p-3">
                     <h6>Order Summary</h6>
-
-                    <Row>
-                      <Col>Subtotal</Col>
-                      <Col className="text-end">
-                        ₹{subtotal.toFixed(2)}
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col>Shipping</Col>
-                      <Col className="text-end">
-                        ₹{order.shipping}
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col>Tax</Col>
-                      <Col className="text-end">
-                        ₹{order.tax}
-                      </Col>
-                    </Row>
-
+                    <Row><Col>Subtotal</Col><Col className="text-end">{formatCurrency(subtotal)}</Col></Row>
+                    <Row><Col>Shipping</Col><Col className="text-end">{formatCurrency(order.shipping || 0)}</Col></Row>
+                    <Row><Col>Discount</Col><Col className="text-end text-success">-{formatCurrency(order.discount || 0)}</Col></Row>
                     <hr />
-
-                    <Row className="fw-bold">
-                      <Col>Total</Col>
-                      <Col className="text-end text-primary">
-                        ₹{total.toFixed(2)}
-                      </Col>
-                    </Row>
+                    <Row className="fw-bold"><Col>Total</Col><Col className="text-end text-primary">{formatCurrency(order.total || 0)}</Col></Row>
                   </Card>
                 </Col>
               </Row>
@@ -182,4 +117,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default Orders;

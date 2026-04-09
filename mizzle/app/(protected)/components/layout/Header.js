@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import {Container, Form, InputGroup, Nav, Navbar,NavDropdown, Button, Badge} from "react-bootstrap";
+import { Container, Form, InputGroup, Nav, Navbar, NavDropdown, Button, Badge, Dropdown } from "react-bootstrap";
 import { Cart, Heart, Search } from "react-bootstrap-icons";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { apiService } from "@/app/api/auth/Endpoint";
 
 const Header = () => {
+  // dropdown state
+  const [show, setShow] = useState(false);
 
   // redux state
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -71,8 +73,8 @@ const Header = () => {
   };
 
   return (
-    <Navbar bg="light" expand="lg" fixed="top" className="border-bottom">
-      <Container>
+    <Navbar bg="dark" expand="lg" fixed="top" className="fs-4 text-white ">
+      <Container >
 
         {/* Logo */}
         <Link href="/product" className="d-flex align-items-center text-decoration-none">
@@ -83,7 +85,7 @@ const Header = () => {
             alt="logo"
             className="rounded-circle me-2"
           />
-          <span className="fw-bold text-dark">Mizzle</span>
+          <span className="fw-bold text-white">Mizzle</span>
         </Link>
 
         {/* Toggle */}
@@ -92,37 +94,47 @@ const Header = () => {
         <Navbar.Collapse id="main-navbar">
 
           {/* Center Nav */}
-          <Nav className="mx-auto text-center">
-            <Link href="/product" className="nav-link">Home</Link>
-            <Link href="/product" className="nav-link">Products</Link>
-            <Link href="/contact" className="nav-link">Contact</Link>
+          <Nav className="mx-auto text-center ">
+            <Link href="/product" className="nav-link text-white">Home</Link>
+            <Link href="/product" className="nav-link text-white">Products</Link>
+            <Link href="/contact" className="nav-link text-white">Contact</Link>
 
-            <NavDropdown title="Explore">
-              <NavDropdown.Item>Features</NavDropdown.Item>
-              <NavDropdown.Item>Sales</NavDropdown.Item>
-              <NavDropdown.Item>New Arrivals</NavDropdown.Item>
-            </NavDropdown>
+
           </Nav>
 
           {/* Right Section */}
           <div className="d-flex align-items-center gap-3">
 
             {/* Search */}
-            <InputGroup style={{ maxWidth: "220px" }}>
+            <InputGroup
+              className="shadow-sm rounded-pill overflow-hidden"
+              style={{ maxWidth: "340px", border: "1px solid #ddd" }}
+            >
               <Form.Control
-                placeholder="Search"
+                placeholder="Search products..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                className="border-0 px-3"
+                style={{ borderRadius: 0 }}
               />
-              <Button variant="outline-secondary" onClick={handleSearch}>
-                <Search />
+              <Button
+                variant="primary"
+                onClick={handleSearch}
+                className="d-flex align-items-center justify-content-center px-3"
+                style={{
+                  borderRadius: 0,
+                  background: "linear-gradient(90deg, #f67d31, #ff8c42)",
+                  border: "none"
+                }}
+              >
+                <Search size={18} />
               </Button>
             </InputGroup>
 
             {/* Wishlist */}
-            <Link href="/Wishlist" className="position-relative text-dark">
-              <Heart size={20} />
+            <Link href="/Wishlist" className="position-relative text-white">
+              <Heart size={25} />
               {wishlistItems?.length > 0 && (
                 <Badge
                   bg="danger"
@@ -135,8 +147,8 @@ const Header = () => {
             </Link>
 
             {/* Cart */}
-            <Link href="/cart" className="position-relative text-dark">
-              <Cart size={22} />
+            <Link href="/cart" className="position-relative text-white ms-2">
+              <Cart size={25} />
               {cartItems?.length > 0 && (
                 <Badge
                   bg="danger"
@@ -148,42 +160,42 @@ const Header = () => {
               )}
             </Link>
 
-            <Nav className="ms-auto">
+            {/* User Dropdown */}
+
+            <Nav>
              
-              <NavDropdown
-                align="end"
-                 title={
-                   <Image
-                  src={user?.avatar || "/logo.PNG"}
-                     width={50}
-                   height={50}
-                   alt="profile"
-                    className="rounded-circle"
-                  />
-               }
-                
-                
-              >
+            
                 {/* My Account Link */}
-                <NavDropdown.Item as={Link} href="/profile" passHref>
-                  My Account
-                </NavDropdown.Item>
 
-                {/* Username display */}
-                <NavDropdown.ItemText>
-                  {user?.username || "User"}
-                </NavDropdown.ItemText>
+                <Dropdown
 
-                <NavDropdown.Item onClick={handleorders} as={Link} href="/orders" passHref>
-                  orders
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
+                  show={show}
+                  onMouseEnter={() => setShow(true)}
+                  onMouseLeave={() => setShow(false)}
 
-                {/* Logout */}
-                <NavDropdown.Item onClick={handleLogout}>
-                  Logout
-                </NavDropdown.Item>
-              </NavDropdown>
+                >
+
+                  <Dropdown.Toggle as="div" id="dropdown-custom-components" style={{ cursor: 'pointer' }} bsPrefix=' '>
+                    <Image
+                      src={user?.avatar || "/logo.PNG"}
+                      width={50}
+                      height={50}
+                      alt="profile"
+                      className="rounded-circle"
+                    />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu align="end">
+                    <Dropdown.Item href="/profile">My Account</Dropdown.Item>
+                    <Dropdown.Item href="/profile">{user?.username || "User"}</Dropdown.Item>
+                    <Dropdown.Item href="/orders" onClick={handleorders}>
+                      orders
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+
+                  </Dropdown.Menu>
+                </Dropdown>
             </Nav>
 
           </div>

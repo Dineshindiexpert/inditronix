@@ -19,20 +19,20 @@ const Footer = () => {
           <Col lg={2} md={6}>
             <h6 className="fw-semibold mb-3">Company</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className="text-secondary text-decoration-none">About</a></li>
-              <li><a href="#" className="text-secondary text-decoration-none">Careers</a></li>
-              <li><a href="#" className="text-secondary text-decoration-none">Blog</a></li>
-              <li><a href="#" className="text-secondary text-decoration-none">Contact</a></li>
+              <li><a href="/about" className="text-secondary text-decoration-none">About</a></li>
+              <li><a href="/careers" className="text-secondary text-decoration-none">Careers</a></li>
+              <li><a href="/blog" className="text-secondary text-decoration-none">Blog</a></li>
+              <li><a href="/contact" className="text-secondary text-decoration-none">Contact</a></li>
             </ul>
           </Col>
 
           <Col lg={2} md={6}>
             <h6 className="fw-semibold mb-3">Support</h6>
             <ul className="list-unstyled">
-              <li><a href="#" className="text-secondary text-decoration-none">Help Center</a></li>
-              <li><a href="#" className="text-secondary text-decoration-none">Terms</a></li>
-              <li><a href="#" className="text-secondary text-decoration-none">Privacy</a></li>
-              <li><a href="#" className="text-secondary text-decoration-none">FAQ</a></li>
+              <li><a href="/help" className="text-secondary text-decoration-none">Help Center</a></li>
+              <li><a href="/terms" className="text-secondary text-decoration-none">Terms</a></li>
+              <li><a href="/privacy" className="text-secondary text-decoration-none">Privacy</a></li>
+              <li><a href="/faq" className="text-secondary text-decoration-none">FAQ</a></li>
             </ul>
           </Col>
 

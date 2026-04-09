@@ -138,7 +138,7 @@ export default function ProductDetails({ params }) {
                   Add to Cart
                 </Button>)}
 
-              <Button
+              <Button href="/checkout"
                 style={{ background: "#F67D31", border: "none" }}
               >
                 <LightningFill className="me-2" />
