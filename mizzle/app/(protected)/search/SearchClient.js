@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense } from "react";
-import SearchContent from "./SearchContent";
+import SearchContent from "./Searchconten";
 
 export default function SearchClient() {
   return (
