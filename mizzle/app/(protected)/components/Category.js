@@ -12,6 +12,8 @@ const Category = ({ activeCategory }) => {
   const router = useRouter();
 
   useEffect(() => {
+      if (typeof window === "undefined") return;
+
     const fetchcategory = async () => {
       try {
         const res = await apiService.getCategories();
