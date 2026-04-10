@@ -64,7 +64,7 @@ const SearchPage = () => {
       <div className="container py-4">
          <p className="fs-1 fw-bold">Your top searches here {query}</p>
 
-         <Category/>
+        {typeof window !== "undefined" && <Category />}
 
         {products.length > 0 ? (
           <div className="row g-4">
