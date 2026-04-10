@@ -14,7 +14,7 @@ import { apiService } from "@/app/api/auth/Endpoint";
 import Loading from "../components/loading";
 import { addToCart } from "@/app/store/slice/CartSlice";
 import { addToWishlist } from "@/app/store/slice/WishlistSlice";
-import Category from "../components/Category";
+// import Category from "../components/Category";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
@@ -64,7 +64,7 @@ const SearchPage = () => {
       <div className="container py-4">
          <p className="fs-1 fw-bold">Your top searches here {query}</p>
 
-        {typeof window !== "undefined" && <Category />}
+        {/* {typeof window !== "undefined" && <Category />} */}
 
         {products.length > 0 ? (
           <div className="row g-4">
