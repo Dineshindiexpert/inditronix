@@ -93,11 +93,11 @@ export default function ProductDetails({ params }) {
             <motion.img
               initial={{ scale: 0.8, opacity: 1 }}
               animate={{ scale: 1, opacity: 1 }}
-              whileHover={{ scale: 1.5 }} // 
+              whileHover={{ scale: 1.5 , zIndex: 1}} // 
               transition={{ duration: 1 }}
               src={product.thumbnail}
               className="img-fluid"
-              style={{ maxHeight: "400px", objectFit: "contain" }}
+              style={{ maxHeight: "400px" }}
             />
           </Col>
 

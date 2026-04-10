@@ -5,7 +5,7 @@ export function middleware(req) {
   const { pathname } = req.nextUrl;
 
   // Protected pages
-  const protectedPaths = ["/cart", "/checkout", "/profile"];
+  const protectedPaths = ["/cart", "/checkout", "/profile","/wishlist","/orders"];
   const isProtected = protectedPaths.some(
     (path) => pathname === path || pathname.startsWith(path + "/")
   );
@@ -18,5 +18,5 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/cart", "/checkout", "/profile/:path*"]
+  matcher: ["/cart", "/checkout", "/profile/:path*","wishlist","/orders","/contactus"]
 };
