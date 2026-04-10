@@ -5,6 +5,7 @@ import { ArrowLeft, Cart as CartIcon, PatchMinus, PatchPlus, } from "react-boots
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromcartitems, incrementQty, decrementQty, applyCoupon, } from "../../store/slice/CartSlice";
 import Link from "next/link";
+import EmptyCart from "../components/emptycart";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -72,9 +73,7 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <div className="text-center">
           <p className="lead">Your cart is empty.</p>
-          <Button  href="/product" variant="primary">
-            <ArrowLeft /> Continue Shopping
-          </Button>
+          <EmptyCart/>
         </div>
       ) : (
         <Row>

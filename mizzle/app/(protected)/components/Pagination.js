@@ -10,7 +10,7 @@ const Pagination = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgVMqdcrdknZNAnXODUXK9yOkzxkj1cKoh3g&s"
+            src="https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg"
             alt="First slide"
             style={{ height: "400px", objectFit: "cover" }}
           />
@@ -23,7 +23,7 @@ const Pagination = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://cdn.dribbble.com/userupload/24504622/file/original-ed16c81d6bd952e6ca9a061d5709e8eb.png?resize=400x0"
+            src="https://t4.ftcdn.net/jpg/02/49/50/15/360_F_249501541_XmWdfAfUbWAvGxBwAM0ba2aYT36ntlpH.jpg"
             alt="Second slide"
             style={{ height: "400px", objectFit: "cover" }}
           />
@@ -36,7 +36,7 @@ const Pagination = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWm3i4x3IwvJGSItFKJ5LerDvdLqUnyw3-og&s"
+            src="https://t3.ftcdn.net/jpg/03/14/28/96/360_F_314289607_ADADbnGr64dpGnddyhZPidCoc6jgKiHK.jpg"
             alt="Third slide"
             style={{ height: "400px", objectFit: "cover" }}
           />

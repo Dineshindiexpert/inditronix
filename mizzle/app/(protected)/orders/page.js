@@ -5,6 +5,9 @@ import { Container, Row, Col, Card, Button, ProgressBar, Spinner } from "react-b
 import { CheckCircleFill, Truck } from "react-bootstrap-icons";
 import { useRouter } from "next/navigation";
 import { apiService } from "@/app/api/auth/Endpoint";
+import { div } from "motion/react-client";
+import Nordersyet from "../components/nordersyet";
+import Loading from "../components/loading";
 
 const Orders = () => {
   const router = useRouter();
@@ -34,7 +37,7 @@ const Orders = () => {
     new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(amount);
 
   return (
-    <Container className="my-5">
+    <Container className="my-5" >
       {/* <pre>{JSON.stringify(orders, null, 2)}</pre> */}
       <Row className="mb-4">
         <Col>
@@ -46,9 +49,12 @@ const Orders = () => {
       </Row>
 
       {loading ? (
-        <div className="text-center"><Spinner animation="border" /></div>
+        <div className="text-center"><Loading /></div>
       ) : orders.length === 0 ? (
-        <p className="text-center">No orders found.</p>
+        <div className="text-center">
+          <p className="lead fs-3 fw-bold">No orders found.</p>
+          <Nordersyet />
+        </div>
       ) : (
         orders.map((order) => {
           const subtotal = order.items?.reduce((acc, item) => acc + (item.price || 0) * (item.quantity || 1), 0) || 0;

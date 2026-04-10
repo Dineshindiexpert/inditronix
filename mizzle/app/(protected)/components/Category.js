@@ -44,7 +44,7 @@ const Category = ({ activeCategory }) => {
      
 
       {/* Categories */}
-      <div className="d-flex gap-2 overflow-auto flex-nowrap p-4">
+      <div className="d-flex gap-2 overflow-auto flex-nowrap p-4 hide-scrollbar rounded ">
 
         {/* All Button */}
         <Button

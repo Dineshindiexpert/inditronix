@@ -91,10 +91,10 @@ export default function ProductDetails({ params }) {
           {/* IMAGE */}
           <Col lg={6} className="p-4 d-flex align-items-center justify-content-center">
             <motion.img
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.8, opacity: 1 }}
               animate={{ scale: 1, opacity: 1 }}
-              whileHover={{ scale: 1.2 }} // 
-              transition={{ duration: 0.5 }}
+              whileHover={{ scale: 1.5 }} // 
+              transition={{ duration: 1 }}
               src={product.thumbnail}
               className="img-fluid"
               style={{ maxHeight: "400px", objectFit: "contain" }}

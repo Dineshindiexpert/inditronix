@@ -5,6 +5,7 @@ import { removeFromWishlist } from "../../store/slice/WishlistSlice";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 import { addToCart } from "@/app/store/slice/CartSlice";
+import Emptywishlist from "../components/emptywishlist";
 
 const Wishlist = () => {
     const dispatch = useDispatch();
@@ -80,8 +81,9 @@ const Wishlist = () => {
                     })}
                 </Row>
             ) : (
-                <div className="text-center mt-5">
-                    <p className="lead">Your wishlist is empty.</p>
+                <div className="text-center ">
+                    <p className="lead fs-3 fw-bold">Your wishlist is empty.</p>
+                    <Emptywishlist />
                     <Link href="/product">
                         <Button variant="primary">Continue Shopping</Button>
                     </Link>
