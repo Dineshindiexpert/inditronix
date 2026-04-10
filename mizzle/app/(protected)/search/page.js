@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = "force-dynamic";
+
 import { useEffect, useState } from "react";
 import { useSearchParams } from 'next/navigation';
 import { Card, Button, Badge } from "react-bootstrap";
@@ -20,8 +22,8 @@ const SearchPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const wishlistItems = useSelector((state) => state.wishlist.wishlistItems  || []);
+  const cartItems = useSelector((state) => state.cart.cartItems  || []);
   const dispatch = useDispatch();
 
   useEffect(() => {
